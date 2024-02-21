@@ -5,6 +5,7 @@ public class Launcher : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] Transform bulletSpawnPos;
+    [SerializeField] int maxBulletSpawnCount=10;
 
     private IObjectPool<Bullet> bulletPool;
 
@@ -15,7 +16,7 @@ public class Launcher : MonoBehaviour
             OnGet,
             OnRelease,
             OnDestroyed,
-            maxSize: 5
+            maxSize: maxBulletSpawnCount
         );
     }
 
