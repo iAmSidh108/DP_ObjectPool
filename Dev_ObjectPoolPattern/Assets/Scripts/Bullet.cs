@@ -1,17 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] Vector3 speed;
 
+    private IObjectPool<Bullet> bulletPool;
+
+    public void SetPool(IObjectPool<Bullet> pool)
+    {
+        bulletPool = pool;
+    }
+
+
     private void Update()
     {
         transform.position += speed * Time.deltaTime;
-        Destroy(gameObject, 5f);
+        
     }
 
-    
+    private void OnBecameInvisible()
+    {
+        bulletPool.Release(this);
+    }
+
+
 
 }
