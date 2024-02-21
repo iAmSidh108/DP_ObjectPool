@@ -35,6 +35,7 @@ public class Launcher : MonoBehaviour
 
     private void OnRelease(Bullet bullet)
     {
+        
         bullet.gameObject.SetActive(false);
     }
 

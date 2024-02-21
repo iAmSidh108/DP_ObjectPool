@@ -26,6 +26,15 @@ public class Bullet : MonoBehaviour
         bulletPool.Release(this);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "asteroid")
+        {
+            bulletPool.Release(this);
+
+        }
+    }
+
 
 
 }
