@@ -57,3 +57,22 @@ The Object Pool Pattern is a design pattern that involves creating a pool of reu
    - Clearly document the usage and management of the object pool to aid future maintenance and understanding.
 
 Implementing the Object Pool Pattern in Unity is an effective way to optimize resource management, especially for frequently instantiated and short-lived objects, contributing to improved performance in resource-intensive scenarios.
+
+## How I implemented Object Pool in the game.
+I will use Gun Firing System to showcase how we can implement Pooling system. First I will show how we usually make Gun system. Simple way is to just instantiate gun prefab and destroy the prefab as per requirement. But the problem here is since we can instantiate as many prefab as possible, it is very resource heavy. This is how it is normally implemented without pooling method. 
+
+This is a a bullet script that is attached to BulletPrefab which moves in particular direction at a certain speed when it is instantiated,
+
+![image](https://github.com/iAmSidh108/DP_ObjectPool/assets/63715240/37ce2305-422c-4d85-8513-6c6d8b4cd51a)
+
+This is a launcher script that is attached to Gun to instantiate the bulletPrefab.
+
+![image](https://github.com/iAmSidh108/DP_ObjectPool/assets/63715240/a3a660ae-bed3-486e-b27d-0277ab2a4c80)
+
+## Now this is how Object Pool is implemented.
+Instead of instantiating and destroying the gameObhject again and again, We instantiate the prefab use it and then disable it. And whenever we require it we just enable it again and use it from the pool. This way we dont have to destroy and create things again and again and save a lot of resources.
+
+![image](https://github.com/iAmSidh108/DP_ObjectPool/assets/63715240/9982733f-b81d-4494-8954-27c7780cdc3a)
+
+![image](https://github.com/iAmSidh108/DP_ObjectPool/assets/63715240/36522bdc-a8ec-4674-831b-18f384f3f80e)
+
