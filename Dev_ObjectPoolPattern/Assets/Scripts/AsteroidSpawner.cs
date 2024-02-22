@@ -7,28 +7,17 @@ using UnityEngine.Pool;
 public class AsteroidSpawner : MonoBehaviour
 {
 
-    [SerializeField] Asteroid asteroidPrefab;
     [SerializeField] Transform spawnPos;
-    [SerializeField] int maxAsteroidSpawnCount = 10;
 
-    private IObjectPool<Asteroid> asteroidPool;
 
-    private void Awake()
+    void InstantiateAsteroids()
     {
-        asteroidPool = new ObjectPool<Asteroid>(
-            CreateAsteroid,
-            OnGet,
-            OnRelease,
-            OnDestroyed,
-            maxSize: maxAsteroidSpawnCount
-        ) ;
-    }
-
-    private Asteroid CreateAsteroid()
-    {
-        Asteroid asteroid = Instantiate(asteroidPrefab);
-        asteroid.SetPool(asteroidPool);
-        return asteroid;
+        GameObject asteroid = AsteroidPoolHandler.SharedInstance.GetPooledObject();
+        if (asteroid != null)
+        {
+            asteroid.transform.position = GetRandomPos();
+            asteroid.SetActive(true);
+        }
     }
 
     Vector3 GetRandomPos()
@@ -36,30 +25,12 @@ public class AsteroidSpawner : MonoBehaviour
         return spawnPos.position + new Vector3(Random.Range(-20, 20), 0, 0);
     }
 
-    private void OnGet(Asteroid asteroid)
-    {
-        asteroid.gameObject.SetActive(true);
-        asteroid.transform.position = GetRandomPos();   
-        
-    }
-
-    private void OnRelease(Asteroid asteroid)
-    {
-        asteroid.gameObject.SetActive(false);
-        
-    }
-
-    private void OnDestroyed(Asteroid asteroid)
-    {
-        Destroy(asteroid.gameObject);
-    }
-
     private void Update()
     {
-        if (Random.Range(0, 100) < 3)
+        if (Random.Range(0, 100) < 5)
         {
-           asteroidPool.Get();
+            InstantiateAsteroids();
         }
-       
+
     }
 }

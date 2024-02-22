@@ -5,16 +5,14 @@ using UnityEngine.Pool;
 
 public class Asteroid : MonoBehaviour
 {
-    private IObjectPool<Asteroid> asteroidPool;
 
-    public void SetPool(IObjectPool<Asteroid> pool)
+    private void Start()
     {
-        asteroidPool = pool;
+        StartCoroutine(DisableGameObject());
     }
-
     private void OnBecameInvisible()
     {
-        asteroidPool.Release(this);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,17 +20,27 @@ public class Asteroid : MonoBehaviour
         if (collision.gameObject.tag == "bullet")
         {
 
-            asteroidPool.Release(this);
+            gameObject.SetActive(false);
 
         }
 
         if (collision.gameObject.tag == "ship")
         {
-
-            asteroidPool.Release(this);
+            Player.instance.GetDamage(10);
+            gameObject.SetActive(false);
             
+
         }
     }
 
     
+
+    IEnumerator DisableGameObject()
+    {
+        yield return new WaitForSeconds(5);
+
+        gameObject.SetActive(false);
+    }
+
+
 }

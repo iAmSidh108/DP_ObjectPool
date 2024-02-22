@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using static UnityEngine.GraphicsBuffer;
 
 public class Launcher : MonoBehaviour
 {
@@ -7,49 +8,24 @@ public class Launcher : MonoBehaviour
     [SerializeField] Transform bulletSpawnPos;
     [SerializeField] int maxBulletSpawnCount=10;
 
-    private IObjectPool<Bullet> bulletPool;
-
-    private void Awake()
+    void InstantiateBullets()
     {
-        bulletPool = new ObjectPool<Bullet>(
-            CreateBullet,
-            OnGet,
-            OnRelease,
-            OnDestroyed,
-            maxSize: maxBulletSpawnCount
-        );
+        GameObject bullet = BulletPoolHandler.SharedInstance.GetPooledObject();
+        if (bullet != null)
+        {
+            bullet.transform.position = bulletSpawnPos.transform.position;
+            bullet.transform.rotation = bulletSpawnPos.transform.rotation;
+            bullet.SetActive(true);
+        }
     }
-
-    private Bullet CreateBullet()
-    {
-        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPos.position, Quaternion.identity);
-        bullet.SetPool(bulletPool);
-        return bullet;
-    }
-
-    private void OnGet(Bullet bullet)
-    {
-        bullet.gameObject.SetActive(true);
-        bullet.transform.position = transform.position;
-    }
-
-    private void OnRelease(Bullet bullet)
-    {
-        
-        bullet.gameObject.SetActive(false);
-    }
-
-    private void OnDestroyed(Bullet bullet)
-    {
-        Destroy(bullet.gameObject);
-    }
-
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            bulletPool.Get();
+            InstantiateBullets();
         }
     }
+
+
 }

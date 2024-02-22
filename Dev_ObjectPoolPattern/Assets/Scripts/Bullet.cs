@@ -7,12 +7,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] Vector3 speed;
 
-    private IObjectPool<Bullet> bulletPool;
-
-    public void SetPool(IObjectPool<Bullet> pool)
-    {
-        bulletPool = pool;
-    }
+   
 
 
     private void Update()
@@ -23,14 +18,15 @@ public class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        bulletPool.Release(this);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "asteroid")
         {
-            bulletPool.Release(this);
+
+            gameObject.SetActive(false);
 
         }
     }
