@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 671421460532029524}
   - component: {fileID: 1522000635864790465}
   - component: {fileID: 4034281978532614584}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletPrefab
   m_TagString: bullet
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 0, y: 10, z: 0}
+  isReleased: 0
 --- !u!58 &4034281978532614584
 CircleCollider2D:
   m_ObjectHideFlags: 0

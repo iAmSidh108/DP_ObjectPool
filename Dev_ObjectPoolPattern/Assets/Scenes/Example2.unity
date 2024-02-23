@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 299393456}
   - component: {fileID: 299393455}
   - component: {fileID: 299393457}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ Transform:
   m_GameObject: {fileID: 663244562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -519,6 +519,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1522000635864790465, guid: feb78ba7f2b99a34a9f1823f25979005, type: 3}
   bulletSpawnPos: {fileID: 663244563}
   maxSizeOfPool: 10
+  _fireRate: 0.5
 --- !u!1 &997056858
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +759,7 @@ GameObject:
   - component: {fileID: 1405496964}
   - component: {fileID: 1405496963}
   - component: {fileID: 1405496965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: end
   m_Icon: {fileID: 0}
@@ -889,7 +890,8 @@ GameObject:
   - component: {fileID: 1461653180}
   - component: {fileID: 1461653179}
   - component: {fileID: 1461653178}
-  m_Layer: 0
+  - component: {fileID: 1461653182}
+  m_Layer: 8
   m_Name: Player
   m_TagString: ship
   m_Icon: {fileID: 0}
@@ -1014,6 +1016,33 @@ Transform:
   - {fileID: 663244563}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1461653182
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461653177}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1503299287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1188,7 @@ GameObject:
   - component: {fileID: 1520236729}
   - component: {fileID: 1520236728}
   - component: {fileID: 1520236730}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
