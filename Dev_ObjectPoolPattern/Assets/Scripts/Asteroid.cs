@@ -6,34 +6,46 @@ using UnityEngine.Pool;
 public class Asteroid : MonoBehaviour
 {
 
-    private void Start()
+    private IObjectPool<Asteroid> asteroidPool;
+    private void Update()
     {
-        StartCoroutine(DisableGameObject());
+        ;
     }
-    private void OnBecameInvisible()
+
+    public void SetPool(IObjectPool<Asteroid> pool)
     {
-        gameObject.SetActive(false);
+        asteroidPool = pool;
     }
+
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "bullet")
         {
 
-            gameObject.SetActive(false);
+            asteroidPool.Release(this);
 
         }
 
-        if (collision.gameObject.tag == "ship")
+        if (collision.gameObject.tag == "end")
         {
-            Player.instance.GetDamage(10);
-            gameObject.SetActive(false);
-            
+            Debug.Log("Hit");
+            asteroidPool.Release(this);
 
         }
+
+        //if (collision.gameObject.tag == "ship")
+        //{
+        //    Player.instance.GetDamage(10);
+        //    gameObject.SetActive(false);
+
+
+        //}
     }
 
-    
+
 
     IEnumerator DisableGameObject()
     {

@@ -7,30 +7,60 @@ using UnityEngine.Pool;
 public class AsteroidSpawner : MonoBehaviour
 {
 
-    [SerializeField] Transform spawnPos;
+    [SerializeField] Asteroid asteroidPrefab;
+    [SerializeField] Transform asteroidSpawnPos;
 
+    private IObjectPool<Asteroid> asteroidPool;
+    [SerializeField] int maxSizeOfPool = 15;
 
-    void InstantiateAsteroids()
+    private void Awake()
     {
-        GameObject asteroid = AsteroidPoolHandler.SharedInstance.GetPooledObject();
-        if (asteroid != null)
-        {
-            asteroid.transform.position = GetRandomPos();
-            asteroid.SetActive(true);
-        }
+        asteroidPool = new ObjectPool<Asteroid>(
+            CreateAsteroid,
+            OnGet,
+            OnRelease,
+            OnDestroyed,
+
+            maxSize: maxSizeOfPool
+        );
+    }
+
+    private Asteroid CreateAsteroid()
+    {
+        Asteroid bullet = Instantiate(asteroidPrefab);
+        bullet.SetPool(asteroidPool);
+        return bullet;
     }
 
     Vector3 GetRandomPos()
     {
-        return spawnPos.position + new Vector3(Random.Range(-20, 20), 0, 0);
+        return asteroidSpawnPos.position + new Vector3(Random.Range(-20, 20), 0, 0);
     }
+
+    private void OnGet(Asteroid asteroid)
+    {
+        asteroid.transform.position = GetRandomPos();
+        asteroid.gameObject.SetActive(true);
+        
+    }
+
+    private void OnRelease(Asteroid asteroid)
+    {
+        asteroid.gameObject.transform.position=transform.position;
+        asteroid.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyed(Asteroid asteroid)
+    {
+        Destroy(asteroid.gameObject);
+    }
+
 
     private void Update()
     {
-        if (Random.Range(0, 100) < 5)
+        if (Random.Range(0,100) < 2)
         {
-            InstantiateAsteroids();
+            asteroidPool.Get();
         }
-
     }
 }

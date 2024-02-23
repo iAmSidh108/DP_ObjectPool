@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         }
             
         healthTXT.text = $"Health#: {currentHealth}";
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
     }
 
     private void Move()
