@@ -8,8 +8,12 @@ public class Player : MonoBehaviour
     public static Player instance = null;
 
     public float speed = 10.0f;
-    public float health = 100;
-    public float currentHealth;
+    float health = 100;
+    
+
+    float currentHealth;
+    float currentScore;
+    bool isDead = false;
 
     private void Awake()
     {
@@ -32,21 +36,32 @@ public class Player : MonoBehaviour
     
 
     [SerializeField] TextMeshProUGUI healthTXT;
+    [SerializeField] TextMeshProUGUI scoreTXT;
 
     private void Start()
     {
         currentHealth = health;
+        currentScore = 0;
     }
 
     void Update()
     {
+        if (isDead) return;
+
         if (currentHealth >= 0)
         {
             Move();
+            healthTXT.text = $"Health: {currentHealth}";
+            scoreTXT.text = $"Score: {currentScore}";
+
         }
-            
-        healthTXT.text = $"Health#: {currentHealth}";
-        //Debug.Log(currentHealth);
+        else
+        {
+            healthTXT.text = $"Health#: 0";
+            isDead = true;
+            RotatePlayer();
+            GetComponent<Collider2D>().enabled = false;
+        }
     }
 
     private void Move()
@@ -61,5 +76,21 @@ public class Player : MonoBehaviour
         currentHealth -= damage;
     }
 
-    
+    public void AddScore(int score)
+    {
+        currentScore += score;
+    }
+
+    public bool CheckIsDead()
+    {
+        return isDead;
+    }
+
+    private void RotatePlayer()
+    {
+        // Choose your preferred rotation method from the previous solution
+        transform.Rotate(0, 0, 180f); // Example: Using Transform.Rotate
+    }
+
+
 }

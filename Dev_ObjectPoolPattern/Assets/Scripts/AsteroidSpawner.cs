@@ -34,7 +34,7 @@ public class AsteroidSpawner : MonoBehaviour
 
     Vector3 GetRandomPos()
     {
-        return asteroidSpawnPos.position + new Vector3(Random.Range(-20, 20), 0, 0);
+        return asteroidSpawnPos.position + new Vector3(Random.Range(-10, 10), 0, 0);
     }
 
     private void OnGet(Asteroid asteroid)

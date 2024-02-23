@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] Vector3 speed;
-
+    public bool isReleased = false; // Flag to track release status
     private IObjectPool<Bullet> bulletPool;
 
     public void SetPool(IObjectPool<Bullet> pool)
@@ -18,20 +18,30 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         transform.position += speed * Time.deltaTime;
-
+        StartCoroutine(ReleaseItself());
     }
 
-    private void OnBecameInvisible()
+    IEnumerator ReleaseItself()
     {
+        yield return new WaitForSeconds(5);
         bulletPool.Release(this);
     }
+
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "asteroid")
         {
-            bulletPool.Release(this);
+            if (!isReleased)
+            {
+                bulletPool.Release(this);
+                isReleased = true;
+                Player.instance.AddScore(10);
+            }
         }
     }
+
+    
 
 }
